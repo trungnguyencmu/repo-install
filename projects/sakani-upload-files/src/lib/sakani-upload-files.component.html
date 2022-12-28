@@ -1,0 +1,124 @@
+<div class="form-group row">
+  <ng-container *ngIf="getFormValues.length > 0">
+    <ng-container *ngFor="let file of getFormValues; index as i">
+      <div [className]="itemWrapperClass">
+        <ng-container *ngIf="label">
+          <label class="form-label"
+            >{{ label }}<span *ngIf="allowMultiple">{{ i + 1 }}</span
+            ><span *ngIf="required" class="required-field"> *</span></label
+          >
+        </ng-container>
+        <div
+          *ngIf="isFileUrlImage(file.content_type); else fileBlock"
+          class="form-control image-container p-2 d-flex flex-column border-info round bg-white cursor-pointer mb-3"
+          [ngClass]="{
+            invalid: isInvalid(file),
+            valid: !isInvalid(file)
+          }"
+          (click)="previewItem(file)"
+          [ngStyle]="{ 'background-image': 'url(' + file.file_url + ')' }"
+        >
+          <div
+            class="cursor-pointer d-flex justify-content-end align-items-end"
+            *ngIf="!readonly"
+            appLayoutDirection
+          >
+            <app-icon-remove-circle
+              (click)="remove($event, file)"
+            ></app-icon-remove-circle>
+          </div>
+          <div
+            *ngIf="file.status === fileDataStatus.ERROR"
+            class="d-flex flex-row wrap-error cursor-pointer justify-content-center align-items-center gap-3"
+            (click)="reUpload($event, file)"
+          >
+            <div class="cursor-pointer">
+              <app-icon-error appLayoutDirection></app-icon-error>
+            </div>
+            <div class="cursor-pointer">
+              <app-icon-reset appLayoutDirection></app-icon-reset>
+            </div>
+          </div>
+          <div
+            *ngIf="file.status === fileDataStatus.UPLOADING"
+            class="d-flex flex-row wrap-error cursor-pointer justify-content-center align-items-center"
+          >
+            <app-icon-loading></app-icon-loading>
+          </div>
+        </div>
+        <ng-template #fileBlock>
+          <div
+            class="form-control image-container p-2 d-flex flex-column border-info round bg-file cursor-pointer mb-3"
+          >
+            <div
+              class="cursor-pointer d-flex justify-content-end align-items-end"
+              *ngIf="!readonly"
+              appLayoutDirection
+            >
+              <app-icon-remove-circle
+                (click)="remove($event, file)"
+              ></app-icon-remove-circle>
+            </div>
+            <div
+              class="d-flex flex-column h-100 wrap-error cursor-pointer justify-content-center align-items-center"
+              (click)="downloadFile(file)"
+            >
+              <app-icon-file></app-icon-file>
+              <div
+                *ngIf="file.status === fileDataStatus.ERROR"
+                class="d-flex flex-row file-type-error cursor-pointer justify-content-center align-items-center gap-3"
+                (click)="reUpload($event, file)"
+              >
+                <div class="cursor-pointer">
+                  <app-icon-error appLayoutDirection></app-icon-error>
+                </div>
+                <div class="cursor-pointer">
+                  <app-icon-reset appLayoutDirection></app-icon-reset>
+                </div>
+              </div>
+              <div
+                *ngIf="file.status === fileDataStatus.UPLOADING"
+                class="d-flex flex-row file-type-error cursor-pointer justify-content-center align-items-center"
+              >
+                <app-icon-loading></app-icon-loading>
+              </div>
+              <span class="extension-name"> {{ file.fileName }} </span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+  </ng-container>
+  <input
+    #files
+    type="file"
+    [multiple]="allowMultiple"
+    [accept]="allowContentType"
+    class="d-none"
+    onclick="this.value=null"
+    (change)="addFiles($event)"
+  />
+  <div
+    [className]="itemWrapperClass"
+    *ngIf="!readonly && (allowMultiple || getFormValues.length === 0)"
+  >
+    <div
+      class="form-control image-container justify-content-center align-items-center p-2 d-flex flex-column border-info round bg-white cursor-pointer d-inline-flex mb-3"
+      (click)="files.click()"
+    >
+      <ng-container>
+        <app-icon-upload-plus appLayoutDirection></app-icon-upload-plus>
+        <span class="text-mid-gray mt-2">{{ placeholder }}</span>
+      </ng-container>
+    </div>
+  </div>
+  <div class="text-danger" *ngIf="errors">{{ errors }}</div>
+</div>
+<ng-template #preview let-modal>
+  <div class="modal-body text-center">
+    <img
+      class="img-fluid"
+      [src]="currentPreviewItem.file_url! | safe : 'url'"
+    />
+  </div>
+</ng-template>
