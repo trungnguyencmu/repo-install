@@ -117,4 +117,7 @@
   <div class="text-danger" *ngIf="errors">{{ errors }}</div>
 </div>
 
-<app-modal [imgUrl]="currentPreviewItem.file_url! | safe : 'url'"></app-modal>
+<app-modal
+  *ngIf="currentPreviewItem?.file_url"
+  [imgUrl]="currentPreviewItem.file_url! | safe : 'url'"
+></app-modal>
