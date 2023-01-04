@@ -13,6 +13,7 @@ export class ModalService {
   ) as any;
 
   watch(): Observable<"open" | "close"> {
+    console.log("this.display", this.display);
     return this.display.asObservable();
   }
 
