@@ -1,15 +1,18 @@
-import { ElementRef, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subscription } from 'rxjs';
-import { FileDataInterface } from '../interfaces/file-data.interface';
-import { SakaniUploadFilesService } from './sakani-upload-files.service';
+/** @format */
+import { ElementRef, EventEmitter, OnDestroy, OnInit } from "@angular/core";
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl } from "@angular/forms";
+import { SafeHtml } from "@angular/platform-browser";
+import { Observable, Subscription } from "rxjs";
+import { FileDataInterface } from "../interfaces/file-data.interface";
+import { ModalService } from "../services/modal.service";
+import { SakaniUploadFilesService } from "./sakani-upload-files.service";
 import * as i0 from "@angular/core";
 export declare class SakaniUploadFilesComponent implements ControlValueAccessor, OnInit, OnDestroy {
     private control;
     private formBuilder;
     private SakaniUploadFilesService;
     private modalService;
+    imgUrl: SafeHtml;
     filesControl: FormControl;
     currentPreviewItem: FileDataInterface;
     filesForm: FormGroup;
@@ -41,7 +44,7 @@ export declare class SakaniUploadFilesComponent implements ControlValueAccessor,
         ERROR: string;
     };
     errors: string;
-    constructor(control: NgControl, formBuilder: FormBuilder, SakaniUploadFilesService: SakaniUploadFilesService, modalService: NgbModal);
+    constructor(control: NgControl, formBuilder: FormBuilder, SakaniUploadFilesService: SakaniUploadFilesService, modalService: ModalService);
     ngOnInit(): void;
     ngOnDestroy(): void;
     registerOnChange(fn: any): void;

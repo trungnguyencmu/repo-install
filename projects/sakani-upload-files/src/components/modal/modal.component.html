@@ -1,0 +1,18 @@
+<ng-container *ngIf="display$ | async as display">
+  <section
+    [class.open]="display === 'open'"
+    (click)="close()"
+    class="d-block modal fade show"
+  >
+    <div
+      (click)="$event.stopPropagation()"
+      class="modal-dialog modal-dialog-centered modal-xl"
+    >
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <img class="img-fluid" [src]="imgUrl" />
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

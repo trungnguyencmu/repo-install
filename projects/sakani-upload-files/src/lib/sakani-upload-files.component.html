@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <div class="form-group row">
   <ng-container *ngIf="getFormValues.length > 0">
     <ng-container *ngFor="let file of getFormValues; index as i">
@@ -116,9 +118,8 @@
 </div>
 <ng-template #preview let-modal>
   <div class="modal-body text-center">
-    <img
-      class="img-fluid"
-      [src]="currentPreviewItem.file_url! | safe : 'url'"
-    />
+    <img class="img-fluid" [src]="currentPreviewItem.file_url! | safe : 'url'" />
   </div>
 </ng-template>
+
+<app-modal [imgUrl]="currentPreviewItem.file_url! | safe : 'url'"></app-modal>

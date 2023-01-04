@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Component,
   ElementRef,
@@ -8,45 +10,37 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from '@angular/core';
+} from "@angular/core";
 import {
   ControlValueAccessor,
   FormBuilder,
   FormControl,
   FormGroup,
   NgControl,
-} from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  combineLatest,
-  defer,
-  forkJoin,
-  Observable,
-  of,
-  Subscription,
-} from 'rxjs';
-import { catchError, finalize, map, mergeMap } from 'rxjs/operators';
+} from "@angular/forms";
+import { SafeHtml } from "@angular/platform-browser";
+import { combineLatest, defer, forkJoin, Observable, of, Subscription } from "rxjs";
+import { catchError, finalize, map, mergeMap } from "rxjs/operators";
 import {
   dataURIToBlob,
   FILE_DATA_STATUS,
   GenerateChecksum,
   ReadAsync,
-} from '../helpers/utilities';
-import {
-  FileDataInterface,
-  FileDataStatusT,
-} from '../interfaces/file-data.interface';
-import { DirectUpload } from '../models/direct-upload';
-import { SakaniUploadFilesService } from './sakani-upload-files.service';
+} from "../helpers/utilities";
+import { FileDataInterface, FileDataStatusT } from "../interfaces/file-data.interface";
+import { DirectUpload } from "../models/direct-upload";
+import { ModalService } from "../services/modal.service";
+import { SakaniUploadFilesService } from "./sakani-upload-files.service";
 
 @Component({
-  selector: 'lib-sakani-upload-files',
-  templateUrl: './sakani-upload-files.component.html',
-  styleUrls: ['./sakani-upload-files.component.scss'],
+  selector: "lib-sakani-upload-files",
+  templateUrl: "./sakani-upload-files.component.html",
+  styleUrls: ["./sakani-upload-files.component.scss"],
 })
 export class SakaniUploadFilesComponent
   implements ControlValueAccessor, OnInit, OnDestroy
 {
+  imgUrl!: SafeHtml;
   filesControl!: FormControl;
   currentPreviewItem!: FileDataInterface;
   filesForm!: FormGroup;
@@ -55,15 +49,15 @@ export class SakaniUploadFilesComponent
 
   @Input() translateService: any;
   @Input() isActiveStorage = false;
-  @Input() headers: any = '';
-  @Input() endpointAPI: string = '';
+  @Input() headers: any = "";
+  @Input() endpointAPI: string = "";
   @Input() required = false;
-  @Input() placeholder: string = 'Upload [photo type]';
+  @Input() placeholder: string = "Upload [photo type]";
   @Input() uploading = false;
   @Input() allowMultiple = false;
-  @Input() label: string = '';
-  @Input() itemWrapperClass: string = 'col-12 col-lg-3 col-xxl-2';
-  @Input() allowContentType = '*'; // 'image/png, image/jpeg'
+  @Input() label: string = "";
+  @Input() itemWrapperClass: string = "col-12 col-lg-3 col-xxl-2";
+  @Input() allowContentType = "*"; // 'image/png, image/jpeg'
   @Input() readonly = false;
   @Input() uploader!: string | null;
   @Input() folder!: string | null;
@@ -71,14 +65,14 @@ export class SakaniUploadFilesComponent
   @Output() processUploadEvent = new EventEmitter<string[]>();
   @Output() deleteFileEvent = new EventEmitter<FileDataInterface>();
   @Output() fileOnClickEvent = new EventEmitter<FileDataInterface>();
-  @ViewChild('preview') previewTpl!: ElementRef<any>;
+  @ViewChild("preview") previewTpl!: ElementRef<any>;
   fileDataStatus = FILE_DATA_STATUS;
-  errors = '';
+  errors = "";
   constructor(
     private control: NgControl,
     private formBuilder: FormBuilder,
     private SakaniUploadFilesService: SakaniUploadFilesService,
-    private modalService: NgbModal
+    private modalService: ModalService
   ) {
     if (this.control) {
       this.control.valueAccessor = this;
@@ -148,7 +142,7 @@ export class SakaniUploadFilesComponent
           return combineLatest([
             of(res),
             this.SakaniUploadFilesService.s3Upload(
-              res?.presigned_url || res?.url || '',
+              res?.presigned_url || res?.url || "",
               blob,
               res?.headers
             ),
@@ -182,7 +176,7 @@ export class SakaniUploadFilesComponent
     if (!type) {
       return false;
     }
-    return type?.includes('image');
+    return type?.includes("image");
   }
 
   handleUploadItems(items: FileDataInterface[]) {
@@ -200,23 +194,19 @@ export class SakaniUploadFilesComponent
   }
 
   addFiles(event: Event) {
-    const files: FileList = (event.target as HTMLInputElement)
-      .files as FileList;
+    const files: FileList = (event.target as HTMLInputElement).files as FileList;
     const fileData = [];
-    this.errors = '';
+    this.errors = "";
     for (const file of Array.from(files)) {
       if (this.maxFileSize && file.size > this.maxFileSize) {
         const maxSize = Math.floor(this.maxFileSize / 1000000);
-        this.errors = this.translateService.instant(
-          'ERRORS.FILE_SIZE_TOO_BIG',
-          {
-            maxSize,
-          }
-        );
+        this.errors = this.translateService.instant("ERRORS.FILE_SIZE_TOO_BIG", {
+          maxSize,
+        });
         continue;
       } else {
         const tmpFileData = {
-          id: '_' + Math.random().toString(36).substring(2, 9),
+          id: "_" + Math.random().toString(36).substring(2, 9),
           data: file,
           status: this.fileDataStatus.WAITING,
           isRecord: false,
@@ -273,10 +263,6 @@ export class SakaniUploadFilesComponent
   previewItem(item: FileDataInterface) {
     this.currentPreviewItem = item;
     this.getPreviewImage();
-    this.modalService.open(this.previewTpl, {
-      centered: true,
-      size: 'xl',
-    });
   }
 
   getPreviewImage(): string | void {
@@ -298,11 +284,11 @@ export class SakaniUploadFilesComponent
   }
 
   closePreview() {
-    this.modalService.dismissAll();
+    this.modalService.close();
   }
 
   isInvalid(item: FileDataInterface): boolean {
-    return item.status === 'error';
+    return item.status === "error";
   }
 
   remove($event: Event, file: FileDataInterface) {
