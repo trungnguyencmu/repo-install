@@ -10,7 +10,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from "@angular/core";
+} from "@angular/core"; 
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -25,7 +25,7 @@ import {
   dataURIToBlob,
   FILE_DATA_STATUS,
   GenerateChecksum,
-  ReadAsync,
+  ReadAsync, 
 } from "../helpers/utilities";
 import { FileDataInterface, FileDataStatusT } from "../interfaces/file-data.interface";
 import { DirectUpload } from "../models/direct-upload";
