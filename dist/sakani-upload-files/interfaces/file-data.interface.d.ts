@@ -19,10 +19,10 @@ export interface FileDataAPI {
     filename?: string;
 }
 export interface DirectUploadParams {
-    auth: string;
     file: FileDataInterface;
     apiUrl: string;
     uploader?: string | null;
     folder?: string | null;
     isActiveStorage?: boolean;
+    headers?: any;
 }

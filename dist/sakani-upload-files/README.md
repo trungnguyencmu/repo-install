@@ -35,13 +35,13 @@ export class AppModule {}
 
 ```
   <lib-sakani-upload-files 
-    allowedExtension="image/png, image/jpeg, image/jpg, application/pdf"
+    allowContentType="image/png, image/jpeg, image/jpg, application/pdf"
     [readonly]="!this.canEditAllInformation"
     [uploader]="uploader"
     formControlName="interior_photo_form"
     [endpointAPI]="directUploadURL"
     [allowMultiple]="true"
-    [auth]="auth"
+    [headers]="headers"
     [isActiveStorage]="true"
     [translateService]="translate"
     [maxFileSize]="200000"
@@ -53,13 +53,21 @@ export class AppModule {}
 
 | parameter        | type                                              | default | description                                     |
 |------------------|---------------------------------------------------|---------|-------------------------------------------------|
-| allowedExtension | image/png, image/jpeg, image/jpg, application/pdf | '*'     |                                                 |
+| allowContentType | image/png, image/jpeg, image/jpg, application/pdf | '*'     |                                                 |
 | maxFileSize      | number (byte)                                     | null    |                                                 |
 | readonly         | boolean                                           | false   |                                                 |
-| uploader         | string                                            | null    |                                                 |
+| uploader         | string                                            | null    |By default, the API supported the base uploader and policy class if you do not pass the custom uploader through uploader parameter. Here is the explanation for the base uploader: `interior_photo`                                            |
 | formControlName  | string                                            | null    |                                                 |
 | endpointAPI      | string                                            | null    | Url api upload to Sakani server                 |
 | allowMultiple    | boolean                                           | false   |                                                 |
-| auth             | string                                            | null    | this is user token in Sakani's platform         |
+| headers             | object                                            | null    | this is user token in Sakani's platform          |
 | isActiveStorage  | boolean                                           | false   | this prop will support for active storage rails |
 | translateService | ngx-translate                                     | null    |                                                 |
+
+Example for headers:
+```
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authentication: 'token',
+  });
+```

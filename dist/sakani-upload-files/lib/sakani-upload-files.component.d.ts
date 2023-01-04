@@ -17,7 +17,7 @@ export declare class SakaniUploadFilesComponent implements ControlValueAccessor,
     formChanged: EventEmitter<any>;
     translateService: any;
     isActiveStorage: boolean;
-    auth: string;
+    headers: any;
     endpointAPI: string;
     required: boolean;
     placeholder: string;
@@ -25,7 +25,7 @@ export declare class SakaniUploadFilesComponent implements ControlValueAccessor,
     allowMultiple: boolean;
     label: string;
     itemWrapperClass: string;
-    allowedExtension: string;
+    allowContentType: string;
     readonly: boolean;
     uploader: string | null;
     folder: string | null;
@@ -64,5 +64,5 @@ export declare class SakaniUploadFilesComponent implements ControlValueAccessor,
     isInvalid(item: FileDataInterface): boolean;
     remove($event: Event, file: FileDataInterface): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<SakaniUploadFilesComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<SakaniUploadFilesComponent, "lib-sakani-upload-files", never, { "translateService": "translateService"; "isActiveStorage": "isActiveStorage"; "auth": "auth"; "endpointAPI": "endpointAPI"; "required": "required"; "placeholder": "placeholder"; "uploading": "uploading"; "allowMultiple": "allowMultiple"; "label": "label"; "itemWrapperClass": "itemWrapperClass"; "allowedExtension": "allowedExtension"; "readonly": "readonly"; "uploader": "uploader"; "folder": "folder"; "maxFileSize": "maxFileSize"; }, { "processUploadEvent": "processUploadEvent"; "deleteFileEvent": "deleteFileEvent"; "fileOnClickEvent": "fileOnClickEvent"; }, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SakaniUploadFilesComponent, "lib-sakani-upload-files", never, { "translateService": "translateService"; "isActiveStorage": "isActiveStorage"; "headers": "headers"; "endpointAPI": "endpointAPI"; "required": "required"; "placeholder": "placeholder"; "uploading": "uploading"; "allowMultiple": "allowMultiple"; "label": "label"; "itemWrapperClass": "itemWrapperClass"; "allowContentType": "allowContentType"; "readonly": "readonly"; "uploader": "uploader"; "folder": "folder"; "maxFileSize": "maxFileSize"; }, { "processUploadEvent": "processUploadEvent"; "deleteFileEvent": "deleteFileEvent"; "fileOnClickEvent": "fileOnClickEvent"; }, never, never>;
 }
