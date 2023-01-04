@@ -261,6 +261,7 @@ export class SakaniUploadFilesComponent
   }
 
   previewItem(item: FileDataInterface) {
+    console.log("item", item);
     this.currentPreviewItem = item;
     this.getPreviewImage();
   }

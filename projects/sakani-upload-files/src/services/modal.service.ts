@@ -17,6 +17,7 @@ export class ModalService {
   }
 
   open() {
+    console.log("run");
     this.display.next("open");
   }
 

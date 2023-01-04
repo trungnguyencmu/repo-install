@@ -69,12 +69,11 @@
               <div
                 *ngIf="file.status === fileDataStatus.ERROR"
                 class="d-flex flex-row file-type-error cursor-pointer justify-content-center align-items-center gap-3"
-                (click)="reUpload($event, file)"
               >
                 <div class="cursor-pointer">
                   <app-icon-error appLayoutDirection></app-icon-error>
                 </div>
-                <div class="cursor-pointer">
+                <div class="cursor-pointer" (click)="reUpload($event, file)">
                   <app-icon-reset appLayoutDirection></app-icon-reset>
                 </div>
               </div>
